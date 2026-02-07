@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 A Special Question for Sanaa 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4ec 50%, #ffd6e7 100%);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp 8s ease-in infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 3rem;
+            color: #d63384;
+            text-shadow: 2px 2px 4px rgba(214, 51, 132, 0.3);
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .question {
+            font-size: 2rem;
+            color: #6f42c1;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .name {
+            color: #d63384;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 100px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        /* Yes button - Cat treat */
+        .yes-btn {
+            position: relative;
+            background: linear-gradient(145deg, #ffd700, #ffb347);
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8b4513;
+            border-radius: 30px;
+            cursor: none;
+            box-shadow: 0 8px 25px rgba(255, 179, 71, 0.5);
+            transition: all 0.3s ease;
+            animation: treatBounce 1s ease-in-out infinite;
+        }
+
+        .yes-btn::before {
+            content: "🐟";
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .yes-btn::after {
+            content: "🐟";
+            font-size: 2rem;
+            margin-left: 10px;
+        }
+
+        @keyframes treatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 35px rgba(255, 179, 71, 0.7);
+        }
+
+        /* No button - Fishtopher */
+        .no-btn {
+            position: absolute;
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: none;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.15s ease-out;
+        }
+
+        .no-btn img {
+            width: 120px;
+            height: auto;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.3));
+            transition: transform 0.15s ease-out;
+        }
+
+        .no-btn span {
+            background: rgba(255,255,255,0.95);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-family: 'Georgia', serif;
+        }
+
+        .no-btn.scared img {
+            animation: catScared 0.15s ease-in-out;
+        }
+
+        @keyframes catScared {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-10deg); }
+            75% { transform: scale(1.1) rotate(10deg); }
+        }
+
+        /* Milo cursor */
+        .cat-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        .cat-cursor img {
+            width: 100px;
+            height: auto;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.3));
+            transition: transform 0.1s ease-out;
+        }
+
+        .cat-cursor.hunting img {
+            animation: miloWiggle 0.2s ease-in-out infinite;
+        }
+
+        @keyframes miloWiggle {
+            0%, 100% { transform: rotate(-8deg) scale(1.1); }
+            50% { transform: rotate(8deg) scale(1.1); }
+        }
+
+        /* Paw prints trail */
+        .paw-print {
+            position: fixed;
+            pointer-events: none;
+            font-size: 15px;
+            opacity: 0.5;
+            z-index: 999;
+            animation: pawFade 1s ease-out forwards;
+        }
+
+        @keyframes pawFade {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        /* Success screen */
+        .success-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffc3d4 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: successIn 0.5s ease-out;
+        }
+
+        @keyframes successIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .success-screen.show {
+            display: flex;
+        }
+
+        .success-title {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: successPulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .success-message {
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .success-cats {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        .success-cats img {
+            width: 120px;
+            height: auto;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+            animation: catBounce 1s ease-in-out infinite;
+        }
+
+        .success-cats img:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .success-cats .heart-between {
+            font-size: 3rem;
+            animation: heartPop 1s ease-in-out infinite;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes heartPop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .success-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .success-heart {
+            position: absolute;
+            font-size: 40px;
+            animation: explodeHeart 2s ease-out infinite;
+        }
+
+        @keyframes explodeHeart {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2) translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        /* Tooltip for cat */
+        .cat-tooltip {
+            position: fixed;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #d63384;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            pointer-events: none;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+
+        .cat-tooltip.show {
+            opacity: 1;
+        }
+
+        /* Message counter */
+        .attempt-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: #d63384;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">💕 Happy Valentine's Day 💕</h1>
+        <p class="question">
+            My dearest <span class="name">Sanaa</span>,<br>
+            Will you be my Valentine? 🥺💖
+        </p>
+
+        <div class="buttons-container">
+            <button class="yes-btn" id="yesBtn">Yes!</button>
+        </div>
+    </div>
+
+    <!-- Elusive No button - Fishtopher -->
+    <button class="no-btn" id="noBtn">
+        <img src="fishtopher.png" alt="Fishtopher">
+        <span>No</span>
+    </button>
+
+    <!-- Milo cursor -->
+    <div class="cat-cursor" id="catCursor">
+        <img src="milo.png" alt="Milo">
+    </div>
+
+    <!-- Cat tooltip -->
+    <div class="cat-tooltip" id="catTooltip">Milo: Meow! Come back Fishtopher!</div>
+
+    <!-- Attempt message -->
+    <div class="attempt-message" id="attemptMessage">Milo wants to play with Fishtopher! 🐱➡️🐱</div>
+
+    <!-- Success screen -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-hearts" id="successHearts"></div>
+        <h1 class="success-title">YAY! 🎉💕</h1>
+        <p class="success-message">
+            You've made me the happiest person ever!<br><br>
+            I can't wait to spend Valentine's Day with you, Sanaa! 💖
+        </p>
+        <div class="success-cats">
+            <img src="milo.png" alt="Milo">
+            <span class="heart-between">💕</span>
+            <img src="fishtopher.png" alt="Fishtopher">
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const catCursor = document.getElementById('catCursor');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const successScreen = document.getElementById('successScreen');
+        const catTooltip = document.getElementById('catTooltip');
+        const attemptMessage = document.getElementById('attemptMessage');
+        const heartsBg = document.getElementById('heartsBg');
+
+        // State
+        let mouseX = 0, mouseY = 0;
+        let catX = 0, catY = 0;
+        let noBtnX = window.innerWidth - 200;
+        let noBtnY = window.innerHeight / 2;
+        let escapeAttempts = 0;
+        let lastPawTime = 0;
+        let isHunting = false;
+
+        // Funny messages when Fishtopher escapes
+        const escapeMessages = [
+            "Fishtopher is too fast! Try the treat instead! 🐟",
+            "Fishtopher is REALLY good at escaping...",
+            "Maybe the yummy treat is the better choice? 🤔",
+            "Fishtopher learned from the best escape artists!",
+            "That's one speedy kitty! 🐱💨",
+            "Milo is getting tired... try the yummy treat!",
+            "Fishtopher has plot armor! Choose the fish treat! 🐟",
+            "Even the fastest cats would give up...",
+            "Fishtopher has escaped " + escapeAttempts + " times!",
+            "Sanaa, please... Milo just wants to be friends! 🥺",
+            "The cats will be reunited if you say Yes! 💕"
+        ];
+
+        // Initialize floating hearts
+        function createFloatingHearts() {
+            const hearts = ['💕', '💖', '💗', '💝', '💘', '❤️', '🩷'];
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+                heartsBg.appendChild(heart);
+            }
+        }
+        createFloatingHearts();
+
+        // Position No button initially
+        function positionNoButton() {
+            noBtn.style.left = noBtnX + 'px';
+            noBtn.style.top = noBtnY + 'px';
+        }
+        positionNoButton();
+
+        // Mouse/touch tracking
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            updateCatCursor();
+            checkMouseProximity();
+            createPawPrint();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            updateCatCursor();
+            checkMouseProximity();
+        });
+
+        // Update cat cursor position with slight delay for smooth following
+        function updateCatCursor() {
+            catX += (mouseX - catX) * 0.12;
+            catY += (mouseY - catY) * 0.12;
+            catCursor.style.left = catX + 'px';
+            catCursor.style.top = catY + 'px';
+
+            // Update tooltip position
+            catTooltip.style.left = (catX + 70) + 'px';
+            catTooltip.style.top = (catY - 30) + 'px';
+        }
+
+        // Animation loop for smooth cursor
+        function animateCursor() {
+            updateCatCursor();
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Create paw print trail
+        function createPawPrint() {
+            const now = Date.now();
+            if (now - lastPawTime < 150) return;
+            lastPawTime = now;
+
+            const paw = document.createElement('div');
+            paw.className = 'paw-print';
+            paw.textContent = '🐾';
+            paw.style.left = (catX - 10) + 'px';
+            paw.style.top = (catY + 50) + 'px';
+            document.body.appendChild(paw);
+
+            setTimeout(() => paw.remove(), 1000);
+        }
+
+        // Check if Milo is near Fishtopher (No button)
+        function checkMouseProximity() {
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+
+            const distance = Math.sqrt(
+                Math.pow(catX - btnCenterX, 2) +
+                Math.pow(catY - btnCenterY, 2)
+            );
+
+            // If Milo gets close, Fishtopher runs away!
+            if (distance < 180) {
+                isHunting = true;
+                catCursor.classList.add('hunting');
+                noBtn.classList.add('scared');
+                escapeFishtopher();
+            } else {
+                isHunting = false;
+                catCursor.classList.remove('hunting');
+                noBtn.classList.remove('scared');
+            }
+
+            // Show tooltip occasionally when hunting
+            if (isHunting && Math.random() < 0.02) {
+                showTooltip();
+            }
+        }
+
+        // Make Fishtopher escape
+        function escapeFishtopher() {
+            escapeAttempts++;
+
+            // Calculate escape direction (away from Milo)
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+
+            let escapeX = btnCenterX - catX;
+            let escapeY = btnCenterY - catY;
+
+            // Normalize and amplify
+            const length = Math.sqrt(escapeX * escapeX + escapeY * escapeY);
+            escapeX = (escapeX / length) * (180 + Math.random() * 120);
+            escapeY = (escapeY / length) * (180 + Math.random() * 120);
+
+            // Add some randomness
+            escapeX += (Math.random() - 0.5) * 250;
+            escapeY += (Math.random() - 0.5) * 250;
+
+            // Calculate new position
+            noBtnX = btnRect.left + escapeX;
+            noBtnY = btnRect.top + escapeY;
+
+            // Keep within bounds
+            const maxX = window.innerWidth - btnRect.width - 20;
+            const maxY = window.innerHeight - btnRect.height - 20;
+            noBtnX = Math.max(20, Math.min(maxX, noBtnX));
+            noBtnY = Math.max(20, Math.min(maxY, noBtnY));
+
+            // Apply new position
+            noBtn.style.left = noBtnX + 'px';
+            noBtn.style.top = noBtnY + 'px';
+
+            // Update message
+            updateAttemptMessage();
+        }
+
+        // Update the attempt message
+        function updateAttemptMessage() {
+            if (escapeAttempts > 3 && escapeAttempts % 3 === 0) {
+                const msgIndex = Math.min(
+                    Math.floor((escapeAttempts - 3) / 3),
+                    escapeMessages.length - 1
+                );
+                attemptMessage.textContent = escapeMessages[msgIndex];
+            }
+        }
+
+        // Show cat tooltip
+        function showTooltip() {
+            const tips = [
+                "Milo: Meow! Come back Fishtopher!",
+                "Milo: Almost got you!",
+                "Milo: You're too quick!",
+                "Milo: The fish treat looks yummier...",
+                "Milo: *playful meowing*",
+                "Milo: Maybe I should try the treat? 🐟"
+            ];
+            catTooltip.textContent = tips[Math.floor(Math.random() * tips.length)];
+            catTooltip.classList.add('show');
+            setTimeout(() => catTooltip.classList.remove('show'), 1500);
+        }
+
+        // Handle No button click (shouldn't be possible but just in case)
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            escapeFishtopher();
+            attemptMessage.textContent = "Nice try! But Fishtopher escaped! 🐱💨";
+        });
+
+        // Handle Yes button click - SUCCESS!
+        yesBtn.addEventListener('click', () => {
+            showSuccess();
+        });
+
+        // Show success screen
+        function showSuccess() {
+            successScreen.classList.add('show');
+            createSuccessHearts();
+
+            // Hide cursor stuff
+            catCursor.style.display = 'none';
+            catTooltip.style.display = 'none';
+            document.body.style.cursor = 'default';
+        }
+
+        // Create explosion of hearts on success
+        function createSuccessHearts() {
+            const container = document.getElementById('successHearts');
+            const hearts = ['💕', '💖', '💗', '💝', '💘', '❤️', '🩷', '💜', '💙'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'success-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 100);
+            }
+
+            // Keep creating hearts
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'success-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }, 200);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Keep No button in bounds
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            noBtnX = Math.max(20, Math.min(maxX, noBtnX));
+            noBtnY = Math.max(20, Math.min(maxY, noBtnY));
+            positionNoButton();
+        });
+    </script>
+</body>
+</html>
